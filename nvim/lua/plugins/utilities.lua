@@ -8,11 +8,10 @@ return {
     "HiPhish/rainbow-delimiters.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
-      local rainbow = require("rainbow-delimiters")
-      require("rainbow-delimiters.setup").setup({
+      vim.g.rainbow_delimiters = {
         strategy = {
-          [""] = rainbow.strategy["global"],
-          vim = rainbow.strategy["local"],
+          [""] = "global",
+          vim = "local",
         },
         query = {
           [""] = "rainbow-delimiters",
@@ -27,7 +26,7 @@ return {
           "RainbowDelimiterViolet",
           "RainbowDelimiterCyan",
         },
-      })
+      }
     end,
   },
 
