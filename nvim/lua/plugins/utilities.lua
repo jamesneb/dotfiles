@@ -10,8 +10,8 @@ return {
     config = function()
       vim.g.rainbow_delimiters = {
         strategy = {
-          [""] = "global",
-          vim = "local",
+          [""] = "rainbow-delimiters.strategy.global",
+          vim = "rainbow-delimiters.strategy.local",
         },
         query = {
           [""] = "rainbow-delimiters",
