@@ -2,6 +2,35 @@
 -- Quality-of-life plugins: undo visualization, indent guides, notifications, live rename
 
 return {
+  -- Rainbow delimiters: color-matched brackets/parens
+  -- Makes nested structures easier to parse visually
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local rainbow = require("rainbow-delimiters")
+      require("rainbow-delimiters.setup").setup({
+        strategy = {
+          [""] = rainbow.strategy["global"],
+          vim = rainbow.strategy["local"],
+        },
+        query = {
+          [""] = "rainbow-delimiters",
+          lua = "rainbow-blocks",
+        },
+        highlight = {
+          "RainbowDelimiterRed",
+          "RainbowDelimiterYellow",
+          "RainbowDelimiterBlue",
+          "RainbowDelimiterOrange",
+          "RainbowDelimiterGreen",
+          "RainbowDelimiterViolet",
+          "RainbowDelimiterCyan",
+        },
+      })
+    end,
+  },
+
   -- Undotree: visualize undo history as a tree
   -- Git for your buffer - see branches of edits and jump to any state
   {
