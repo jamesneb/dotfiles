@@ -1,0 +1,74 @@
+// Node/TypeScript development layout
+// Use: zellij -l node
+
+layout {
+    // zjstatus at bottom
+    pane size=1 borderless=true {
+        plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+            format_left  "#[fg=green,bold]{session} {mode} #[fg=yellow] Node"
+            format_center "{tabs}"
+            format_right "{command_git_branch} {datetime}"
+            format_space "#[bg=default] "
+
+            mode_normal  "#[fg=green,bold] NORMAL"
+            mode_pane    "#[fg=yellow,bold] PANE"
+            mode_locked  "#[fg=red,bold,blink] LOCKED"
+
+            tab_normal   "#[fg=#6272A4] {name}"
+            tab_active   "#[fg=cyan,bold] {name}"
+
+            command_git_branch_command "git branch --show-current 2>/dev/null"
+            command_git_branch_format "#[fg=magenta] {stdout}"
+            command_git_branch_interval "5"
+
+            datetime        "#[fg=#6272A4] {format}"
+            datetime_format "%H:%M"
+        }
+    }
+
+    // Main content
+    pane split_direction="horizontal" {
+        pane command="nvim-zellij" size="70%" focus=true {
+            args "."
+            name "editor"
+        }
+        pane split_direction="vertical" size="30%" {
+            pane size="60%" name="term"
+            // tsx watch mode or node --inspect
+            pane size="40%" name="dev" command="npx" {
+                args "tsx" "watch" "."
+                start_suspended true
+            }
+        }
+    }
+}
+
+swap_tiled_layout name="server" {
+    tab min_panes=3 {
+        pane size=1 borderless=true {
+            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+                format_left "{session} #[fg=yellow] Node"
+            }
+        }
+        pane split_direction="vertical" {
+            pane command="nvim-zellij" size="65%" {
+                args "."
+            }
+            pane stacked=true size="35%" {
+                pane name="term"
+                pane name="dev" command="npm" {
+                    args "run" "dev"
+                    start_suspended true
+                }
+                pane name="test" command="npm" {
+                    args "test"
+                    start_suspended true
+                }
+                pane name="typecheck" command="npx" {
+                    args "tsc" "--noEmit" "--watch"
+                    start_suspended true
+                }
+            }
+        }
+    }
+}

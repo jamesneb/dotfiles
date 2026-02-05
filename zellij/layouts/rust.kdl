@@ -1,0 +1,81 @@
+// Rust development layout with bacon (continuous checker)
+// Use: zellij -l rust
+
+layout {
+    // zjstatus at bottom
+    pane size=1 borderless=true {
+        plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+            format_left  "#[fg=orange,bold]{session} {mode} #[fg=red] Rust"
+            format_center "{tabs}"
+            format_right "{command_git_branch} {datetime}"
+            format_space "#[bg=default] "
+
+            mode_normal  "#[fg=green,bold] NORMAL"
+            mode_pane    "#[fg=yellow,bold] PANE"
+            mode_locked  "#[fg=red,bold,blink] LOCKED"
+
+            tab_normal   "#[fg=#6272A4] {name}"
+            tab_active   "#[fg=cyan,bold] {name}"
+
+            command_git_branch_command "git branch --show-current 2>/dev/null"
+            command_git_branch_format "#[fg=magenta] {stdout}"
+            command_git_branch_interval "5"
+
+            datetime        "#[fg=#6272A4] {format}"
+            datetime_format "%H:%M"
+        }
+    }
+
+    // Main content
+    pane split_direction="horizontal" {
+        pane command="nvim-zellij" size="70%" focus=true {
+            args "."
+            name "editor"
+        }
+        pane split_direction="vertical" size="30%" {
+            pane size="60%" name="term"
+            // bacon: continuous Rust checker (like cargo watch but better UI)
+            pane size="40%" name="bacon" command="bacon" {
+                start_suspended true
+            }
+        }
+    }
+}
+
+// Swap layouts for different pane arrangements
+swap_tiled_layout name="focused" {
+    tab max_panes=4 {
+        pane size=1 borderless=true {
+            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+                format_left  "#[fg=orange,bold]{session} #[fg=red] Rust"
+                format_center "{tabs}"
+            }
+        }
+        pane command="nvim-zellij" {
+            args "."
+        }
+    }
+}
+
+swap_tiled_layout name="stacked" {
+    tab min_panes=3 {
+        pane size=1 borderless=true {
+            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+                format_left "{session} #[fg=red] Rust"
+            }
+        }
+        pane split_direction="vertical" {
+            pane command="nvim-zellij" size="70%" {
+                args "."
+            }
+            pane stacked=true size="30%" {
+                pane name="term"
+                pane name="bacon" command="bacon" { start_suspended true }
+                pane name="tests" command="cargo" {
+                    args "test"
+                    start_suspended true
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,115 @@
+# Ghostty Terminal Configuration
+
+# ============================================
+# Theme
+# ============================================
+
+# Reversed system theme: dark when system is light
+theme = dark:Catppuccin Latte,light:Fahrenheit
+window-theme = system
+
+# ============================================
+# Font
+# ============================================
+
+# Primary font
+font-family = Berkeley Mono Variable
+font-variation = wght=400
+font-variation = slnt=0
+font-size = 14
+font-feature = +calt
+font-feature = +ss04
+font-thicken = true
+adjust-cell-height = 1
+
+# Fallback for Nerd Font symbols (Starship, etc.)
+font-family = MesloLGS NF
+
+# ============================================
+# Shell Integration
+# ============================================
+
+shell-integration = zsh
+shell-integration-features = cursor,sudo,title
+
+# ============================================
+# macOS Settings
+# ============================================
+
+macos-titlebar-style = tabs
+macos-option-as-alt = true
+
+# ============================================
+# Window
+# ============================================
+
+window-padding-x = 8
+window-padding-y = 6
+window-padding-balance = true
+window-save-state = always
+window-inherit-working-directory = true
+
+# ============================================
+# Cursor & Mouse
+# ============================================
+
+cursor-style = bar
+cursor-style-blink = false
+mouse-hide-while-typing = true
+
+# ============================================
+# Clipboard
+# ============================================
+
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = clipboard
+
+# ============================================
+# Scrollback
+# ============================================
+
+scrollback-limit = 100000
+
+# ============================================
+# Quick Terminal
+# ============================================
+
+# Cmd+` globally toggles quick terminal
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+quick-terminal-position = top
+quick-terminal-animation-duration = 0.2
+quick-terminal-autohide = true
+
+# ============================================
+# Keybindings: Split Navigation (Opt+hjkl)
+# ============================================
+
+keybind = opt+h=goto_split:left
+keybind = opt+j=goto_split:bottom
+keybind = opt+k=goto_split:top
+keybind = opt+l=goto_split:right
+
+# ============================================
+# Keybindings: Split Creation (Opt+Shift+hjkl)
+# ============================================
+
+keybind = opt+shift+h=new_split:left
+keybind = opt+shift+j=new_split:down
+keybind = opt+shift+k=new_split:up
+keybind = opt+shift+l=new_split:right
+
+# ============================================
+# Keybindings: Split Management
+# ============================================
+
+keybind = cmd+shift+enter=toggle_split_zoom
+keybind = cmd+shift+e=equalize_splits
+
+# ============================================
+# Keybindings: Utilities
+# ============================================
+
+keybind = cmd+z=undo
+keybind = cmd+shift+t=toggle_window_float_on_top
+keybind = cmd+opt+i=inspector:toggle

@@ -1,0 +1,5 @@
+layout {
+    pane command="/Users/jamescomputer/.local/bin/nvim-zellij" {
+        args "."
+    }
+}

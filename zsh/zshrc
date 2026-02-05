@@ -1,0 +1,327 @@
+# Zsh Configuration
+# Primary shell configuration for macOS
+
+# ============================================
+# Oh My Zsh Setup
+# ============================================
+
+# Path to Oh My Zsh installation
+export ZSH="$HOME/.oh-my-zsh"
+
+# Theme: empty because using Starship prompt
+ZSH_THEME=""
+
+# Plugins: loaded via Oh My Zsh plugin system
+plugins=(
+  # Version control
+  git
+  gh
+  tig
+
+  # Package managers
+  brew
+  node
+  npm
+  uv
+
+  # Languages
+  golang
+  rust
+
+  # Containers
+  docker
+  docker-compose
+  kubectl
+
+  # Cloud
+  terraform
+  aws
+  gcloud
+
+  # macOS
+  macos
+  vscode
+
+  # Tools
+  fzf
+  extract
+  gitignore
+  direnv
+  encode64
+  colored-man-pages
+  jsontools
+  urltools
+  history
+  tldr
+  mise
+
+  # Editing
+  vi-mode
+  fancy-ctrl-z
+  sudo
+  copybuffer
+  copyfile
+  copypath
+  safe-paste
+
+  # Notifications
+  bgnotify
+  timer
+
+  # Navigation
+  magic-enter
+  per-directory-history
+  aliases
+  zoxide
+
+  # Completions (must be last)
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  zsh-autocomplete
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# ============================================
+# Shell Options
+# ============================================
+
+# Performance: skip tracking untracked files in large repos
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# History: large history with deduplication
+HISTSIZE=100000
+SAVEHIST=100000
+HIST_STAMPS="yyyy-mm-dd"
+export HIST_IGNORE_ALL_DUPS
+export HIST_FIND_NO_DUPS
+export HIST_REDUCE_BLANKS
+
+# Auto-correction for commands
+ENABLE_CORRECTION="true"
+
+# Completion styling
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# ============================================
+# Environment Variables
+# ============================================
+
+# PATH additions
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+# Go environment
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+
+# Rust environment
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# GPG
+export GPG_TTY=$(tty)
+
+# NVM (Node Version Manager)
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+
+# FZF configuration
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+
+# ============================================
+# Aliases: Navigation
+# ============================================
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias proj="cd ~/Projects"
+alias desk="cd ~/Desktop"
+alias down="cd ~/Downloads"
+
+# ============================================
+# Aliases: Modern CLI Replacements
+# ============================================
+
+# eza: modern ls with icons
+alias ls="eza --icons --group-directories-first"
+alias ll="eza -la --icons --group-directories-first"
+alias la="eza -a --icons --group-directories-first"
+alias l="eza --icons --group-directories-first"
+alias tree="eza --tree --icons"
+
+# Other replacements
+alias cat="bat"
+alias find="fd"
+alias top="htop"
+alias grep="grep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
+
+# ============================================
+# Aliases: Git
+# ============================================
+
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git pull"
+alias gd="git diff"
+alias gb="git branch"
+alias gco="git checkout"
+alias glog="git log --oneline --graph --decorate"
+
+# ============================================
+# Aliases: Development
+# ============================================
+
+alias py="python3"
+alias pip="pip3"
+alias nv="nvim"
+alias vim="nvim"
+alias zshconfig="code ~/.zshrc"
+alias ohmyzsh="code ~/.oh-my-zsh"
+
+# ============================================
+# Aliases: System
+# ============================================
+
+alias reload="source ~/.zshrc"
+alias path="echo -e \${PATH//:/\\n}"
+alias myip="curl http://ipecho.net/plain; echo"
+alias ports="netstat -tulanp"
+alias brewup="brew update && brew upgrade && brew cleanup"
+alias hg='history | grep'
+
+# ============================================
+# Aliases: Zellij
+# ============================================
+
+alias zj="zellij-dev"                     # smart launcher with theme detection
+alias zja="zellij attach"
+alias zjl="zellij list-sessions"
+alias zjk="zellij kill-session"
+alias zjdark="zellij options --theme kanagawa"
+alias zjlight="zellij options --theme catppuccin-latte"
+
+# Project layouts
+alias dev="zellij-dev"                    # default: nvim + terminal
+alias zrust="zellij --layout rust"        # rust: nvim + bacon
+alias zgo="zellij --layout go"            # go: nvim + dlv
+alias znode="zellij --layout node"        # node/ts: nvim + tsx watch
+alias zpy="zellij --layout python"        # python: nvim + debugpy
+alias zserver="zellij --layout server"    # server: nvim + stacked panes
+alias zsplit="zellij --layout split"      # split: nvim + side terminal
+
+# ============================================
+# Aliases: Modern Tools
+# ============================================
+
+alias j="just"
+alias btm="btm"
+alias du="dust"
+alias ps="procs"
+alias bench="hyperfine"
+alias watch="watchexec"
+alias cheat="glow ~/ULTIMATE_NVIM_TMUX_CHEATSHEET.md"
+
+# ============================================
+# Functions
+# ============================================
+
+# Create directory and enter it
+function mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
+# Go up n directories
+function up() {
+  local d=""
+  limit=$1
+  for ((i=1 ; i <= limit ; i++)); do
+    d=$d/..
+  done
+  d=$(echo $d | sed 's/^\///')
+  if [ -z "$d" ]; then
+    d=..
+  fi
+  cd $d
+}
+
+# Run command with timing
+function run_with_timing() {
+  start_time=$(date +%s.%N)
+  "$@"
+  end_time=$(date +%s.%N)
+  duration=$(echo "$end_time - $start_time" | bc)
+  echo "\nCommand completed in $duration seconds"
+}
+alias rwt=run_with_timing
+
+# Convert hex color to WGPU vec3f
+hex2wgpu() {
+  echo "$1" | awk '
+    BEGIN { FS="" }
+    {
+      gsub(/^#/, "", $0);
+      r = substr($0,1,2);
+      g = substr($0,3,2);
+      b = substr($0,5,2);
+      R = strtonum("0x" r) / 255.0;
+      G = strtonum("0x" g) / 255.0;
+      B = strtonum("0x" b) / 255.0;
+      printf "vec3f(%.6f, %.6f, %.6f)\n", R, G, B;
+    }'
+}
+
+# Yazi file manager with directory changing
+function y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
+}
+
+# ============================================
+# Tool Initializations
+# ============================================
+
+# FZF key bindings
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [[ -f "/opt/homebrew/opt/fzf/shell/key-bindings.zsh" ]]; then
+  source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+fi
+if [[ -f "/opt/homebrew/opt/fzf/shell/completion.zsh" ]]; then
+  source "/opt/homebrew/opt/fzf/shell/completion.zsh"
+fi
+
+# Bun completions
+[ -s "/Users/jamescomputer/.bun/_bun" ] && source "/Users/jamescomputer/.bun/_bun"
+
+# Atuin: shell history
+eval "$(atuin init zsh)"
+
+# Navi: interactive cheatsheet (Ctrl+G)
+eval "$(navi widget zsh)"
+
+# Starship: prompt
+eval "$(starship init zsh)"
+
+# ============================================
+# Startup
+# ============================================
+
+# System information display
+fastfetch

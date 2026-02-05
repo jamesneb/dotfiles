@@ -1,0 +1,27 @@
+{
+  "JSDoc File Header": {
+    "prefix": "jsdocfile",
+    "body": [
+      "/**",
+      " * @fileoverview ${1:Brief description}",
+      " *",
+      " * ${2:Longer description if needed.}",
+      " *",
+      " * @module ${3:moduleName}",
+      " */"
+    ],
+    "description": "JSDoc file header comment"
+  },
+  "JSDoc Function": {
+    "prefix": "jsdocfn",
+    "body": [
+      "/**",
+      " * ${1:Description}",
+      " *",
+      " * @param {${2:type}} ${3:param} - ${4:description}",
+      " * @returns {${5:type}} ${6:description}",
+      " */"
+    ],
+    "description": "JSDoc function comment"
+  }
+}

@@ -1,0 +1,16 @@
+# Neovim
+nvim/lazy-lock.json
+nvim/.luarc.json
+
+# Zellij plugins (downloaded binaries)
+zellij/plugins/*.wasm
+
+# Nix
+result
+.direnv/
+
+# macOS
+.DS_Store
+
+# Backup files
+*.backup
