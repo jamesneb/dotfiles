@@ -66,6 +66,18 @@ local theme_by_filetype = {
   typescriptreact = "cyberdream",
 }
 
+-- Rainbow delimiter highlight colors (not defined by most colorschemes)
+local function set_rainbow_colors()
+  local set = vim.api.nvim_set_hl
+  set(0, "RainbowDelimiterRed", { fg = "#E06C75" })
+  set(0, "RainbowDelimiterYellow", { fg = "#E5C07B" })
+  set(0, "RainbowDelimiterBlue", { fg = "#61AFEF" })
+  set(0, "RainbowDelimiterOrange", { fg = "#D19A66" })
+  set(0, "RainbowDelimiterGreen", { fg = "#98C379" })
+  set(0, "RainbowDelimiterViolet", { fg = "#C678DD" })
+  set(0, "RainbowDelimiterCyan", { fg = "#56B6C2" })
+end
+
 -- Filetypes to ignore (plugin UI buffers)
 local ignore_filetypes = {
   ["neo-tree"] = true,
@@ -88,6 +100,7 @@ autocmd("VimEnter", {
   pattern = "*",
   callback = function()
     pcall(vim.cmd.colorscheme, get_default_theme())
+    set_rainbow_colors()
   end,
 })
 
@@ -101,6 +114,7 @@ autocmd("BufEnter", {
     local theme = theme_by_filetype[ft] or get_default_theme()
     if theme and vim.g.colors_name ~= theme then
       pcall(vim.cmd.colorscheme, theme)
+      set_rainbow_colors()
     end
   end,
 })

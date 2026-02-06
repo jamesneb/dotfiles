@@ -77,6 +77,7 @@ return {
       })
 
       -- Bold keywords/functions across all themes
+      -- Rainbow delimiters colors (not included in most colorschemes)
       vim.api.nvim_create_autocmd("ColorScheme", {
         callback = function()
           local set = vim.api.nvim_set_hl
@@ -88,6 +89,14 @@ return {
           set(0, "Statement", { bold = true })
           set(0, "Function", { bold = true })
           set(0, "Type", { bold = true })
+          -- Rainbow delimiter colors
+          set(0, "RainbowDelimiterRed", { fg = "#E06C75" })
+          set(0, "RainbowDelimiterYellow", { fg = "#E5C07B" })
+          set(0, "RainbowDelimiterBlue", { fg = "#61AFEF" })
+          set(0, "RainbowDelimiterOrange", { fg = "#D19A66" })
+          set(0, "RainbowDelimiterGreen", { fg = "#98C379" })
+          set(0, "RainbowDelimiterViolet", { fg = "#C678DD" })
+          set(0, "RainbowDelimiterCyan", { fg = "#56B6C2" })
         end,
       })
 

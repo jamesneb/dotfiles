@@ -6,8 +6,9 @@ return {
   -- Makes nested structures easier to parse visually
   {
     "HiPhish/rainbow-delimiters.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
+    lazy = false,
+    init = function()
+      -- Must be set BEFORE plugin loads
       vim.g.rainbow_delimiters = {
         strategy = {
           [""] = "rainbow-delimiters.strategy.global",
@@ -27,6 +28,24 @@ return {
           "RainbowDelimiterCyan",
         },
       }
+    end,
+    config = function()
+      -- Define highlight colors (some colorschemes don't include these)
+      local function set_rainbow_colors()
+        vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = "#E06C75" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { fg = "#E5C07B" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { fg = "#61AFEF" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { fg = "#D19A66" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { fg = "#98C379" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = "#C678DD" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#56B6C2" })
+      end
+      -- Apply after colorscheme loads
+      vim.api.nvim_create_autocmd("ColorScheme", { callback = set_rainbow_colors })
+      -- Also apply on VimEnter (after everything loads)
+      vim.api.nvim_create_autocmd("VimEnter", { callback = set_rainbow_colors })
+      -- And apply now in case colorscheme already loaded
+      set_rainbow_colors()
     end,
   },
 
